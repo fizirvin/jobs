@@ -1,0 +1,10 @@
+.jobs_table{
+    margin: 15px auto;
+    border-collapse: separate;
+    border-spacing: 1px;
+    border: solid 2px;
+}
+
+.table_row{
+    border: solid 1px;
+}
