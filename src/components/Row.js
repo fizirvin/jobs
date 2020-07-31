@@ -1,6 +1,8 @@
 import React, { useState, Fragment } from 'react'
 import AppRow from './AppRow'
 import AddApp from './AddApp'
+import addApplication from '../actions/mutations/addApplication'
+import { url, opts } from '../config'
 import '../styles/jobs.css'
 
 const Row = ( {item, index }) =>{
@@ -10,9 +12,9 @@ const Row = ( {item, index }) =>{
 
     const [apps, setApps] = useState(false)
     const [form, setForm] = useState(false)
-    const [input, setInput] = useState({})
+    const [list, setList] = useState(applications)
 
-    const renderApps = applications.map( (item, index) =>{
+    const renderApps = list.map( (item, index) =>{
         return <AppRow key={item._id} index={index} item={item}></AppRow>
     })
 
@@ -24,8 +26,18 @@ const Row = ( {item, index }) =>{
         return setForm(!form)
     }
 
-    const onInput = ( ) =>{
-
+    const onInput = async (input) =>{
+        addApplication.variables = {_id, input }
+        opts.body = JSON.stringify(addApplication)
+        const res = await fetch(url, opts);
+        const data = await res.json();
+        if(data.errors){
+            return console.log(data.errors)
+          } else {
+              const application = data.data.newApplication
+              const applications = [...list, application ]
+            return setList(applications)
+        }
     }
 
     return(
@@ -42,7 +54,7 @@ const Row = ( {item, index }) =>{
                 </td>
             </tr>
             { apps ? renderApps : null}
-            { form ? <AddApp onInput={onInput} input={input}/> : null}
+            { form ? <AddApp onInput={onInput}/> : null}
         </Fragment> 
     );
 }

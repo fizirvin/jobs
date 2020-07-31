@@ -7,6 +7,7 @@ const initialQuery = {
             type
             logo
             applications {
+                _id
                 title
                 company
                 date

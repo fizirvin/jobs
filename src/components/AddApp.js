@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import '../styles/jobs.css'
 
-const AddApp = ( ) =>{
+const AddApp = ({onInput}) =>{
     const [company, setCompany] = useState('')
     const [date, setDate] = useState('')
     const [title, setTitle] = useState('')
@@ -25,18 +25,26 @@ const AddApp = ( ) =>{
         return setStatus(status)
     }
 
-    onSubmit = () =>{
-        const input = {company, date, title, status}
+    const onSubmit = () =>{
+        if(!company || !date || !title || !status){
+            return
+        }
+        else {
+            const time = 'T00:00:00.000-06:00'
+            const formatDate  = `${date}${time}`
+            const input = {company, date: formatDate, title, status}
+            return onInput(input)
+        }
     }
 
     return(
         <tr>
             <td className='table_row '></td>
             <td className='table_row'><input type='text' name='company' onChange={onCompany} value={company} size='10'/></td>
-            <td className='table_row'><input type='text' name='date' onChange={onDate} value={date} size='10'/></td>
+            <td className='table_row'><input type='date' name='date' onChange={onDate} value={date} size='10'/></td>
             <td className='table_row'><input type='text' name='title' onChange={onTitle} value={title} size='40'/></td>
             <td className='table_row'><input type='text' name='status' onChange={onStatus} value={status} size='10'/></td>
-            <td className='table_row'><button>send</button></td>
+            <td className='table_row'><button onClick={onSubmit}>send</button></td>
         </tr> 
     );
 }

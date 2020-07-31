@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import '../styles/jobs.css'
 
 const AppRow = ( {item, index}) =>{
     const { title, date, status, company} = item
-
     
     return(
         <tr>

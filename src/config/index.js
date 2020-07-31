@@ -1,5 +1,5 @@
-// const url = 'https://personal-portfolio-server.irvinfiz.now.sh/graph'
-const url = 'http://localhost:4000/graph'
+const url = 'https://personal-portfolio-server.irvinfiz.now.sh/graph'
+// const url = 'http://localhost:4000/graph'
 
 const opts = {
     method: "POST",
