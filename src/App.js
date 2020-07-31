@@ -1,45 +1,30 @@
-import React, { Component } from 'react';
-import './App.css';
-import Jobs from './components/jobs'
+import React, { useState, useEffect } from 'react'
+import './App.css'
+import Jobs from './components/Jobs'
+import { url, opts } from './config'
+import initialQuery from './actions/queries/initialQuery'
 
-class App extends Component {
-  state={
-    server: 'https://personal-portfolio-server.irvinfiz.now.sh/graph',
-    jobs: []
+const App = ( ) =>{
+  const [jobs, setJobs] = useState([])
 
-  }
+  useEffect( () => {
+    const fetchJobs = async () =>{
+      opts.body = JSON.stringify(initialQuery)
+      const res = await fetch(url, opts);
+      const data = await res.json();
+      const { jobs } = data.data
+      return setJobs(jobs)
+    }
+    fetchJobs();
+  }, [])
 
-  async componentDidMount(){
-    const query = `query{
-      jobs {
-        _id
-        name
-        link
-        type
-        logo
-      }
-    }`
-
-    const url = this.state.server;
-    const opts = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ query })
-    };
-    const res = await fetch(url, opts);
-    const data = await res.json();
-    console.log(data.data.jobs)
-    this.setState({jobs: data.data.jobs })
-  }
-
-
-  render(){
-    return (
-      <div className="App">
-        <Jobs jobs={this.state.jobs}></Jobs>
-      </div>
-    );
-  }
+  const renderJobs = <Jobs jobs={jobs}></Jobs>
+  const loading = <div>Loading</div>
+  return (
+    <div className="App">
+      { jobs.length > 0 ? renderJobs : loading }
+    </div>
+  );
 }
 
 export default App;

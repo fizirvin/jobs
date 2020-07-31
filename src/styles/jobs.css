@@ -7,4 +7,37 @@
 
 .table_row{
     border: solid 1px;
+    
 }
+
+.table_row a{
+    text-decoration: none;
+    color: black;
+}
+
+.platform td{
+    background-color: rgb(0, 68, 255);
+}
+
+.community td {
+    color: white;
+    background-color: rgb(29, 24, 24);
+    border: 1px solid black;
+}
+
+.community a{
+    color: white;
+}
+
+.post td{
+    background-color: rgba(7, 75, 24, 0.733);    
+}
+
+.logo{
+    background-color: white;
+}
+
+.freelance{
+    background-color: tomato;
+}
+
